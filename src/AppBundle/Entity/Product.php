@@ -115,9 +115,9 @@ class Product
     /**
      * @param \DateTime $createdAt
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt = null)
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime('now');
     }
 
     /**
@@ -131,9 +131,9 @@ class Product
     /**
      * @param \DateTime $updatedAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updatedAt = null)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
