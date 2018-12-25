@@ -84,6 +84,10 @@ class ProductController extends Controller
      */
     public function deleteAction(Product $product)
     {
-        return new Response("delete action");
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return new Response("deleted");
     }
 }
