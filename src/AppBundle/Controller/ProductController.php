@@ -60,9 +60,23 @@ class ProductController extends Controller
     /**
      * @Route("/{id}", methods={"PUT"})
      */
-    public function updateAction(Product $product)
+    public function updateAction(Request $request, Product $product)
     {
-        return new Response("update action");
+        $data = json_decode($request->getContent(), 1);
+        $data['name']        = $data['name']        ?? $product->getName();
+        $data['description'] = $data['description'] ?? $product->getDescription();
+        $data['slug']        = $data['slug']        ?? $product->getSlug();
+
+        $product->setName($data['name']);
+        $product->setDescription($data['description']);
+        $product->setSlug($data['slug']);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        $data = $this->get('jms_serializer')->serialize($product, 'json');
+        return new Response($data);
     }
 
     /**
